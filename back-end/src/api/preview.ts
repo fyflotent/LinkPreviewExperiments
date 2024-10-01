@@ -10,6 +10,7 @@ type UrlPreviewResponse = {
 
 router.post<{ url: string }, UrlPreviewResponse>("/", (req, res) => {
   const url = req.body.url;
+  console.log(url);
   res.json({
     title: "Title",
     description: "Description",

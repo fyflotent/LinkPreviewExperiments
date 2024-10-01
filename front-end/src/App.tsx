@@ -31,8 +31,18 @@ const PreviewCardDiv = styled.div`
   flex-direction: column;
   border: 1px solid #ccc;
   border-radius: 8px;
-  min-height: 200px;
-  min-width: 400px;
+  width: 400px;
+`;
+
+const H3 = styled.h3`
+  margin-block-start: 0.5em;
+  margin-block-end: 0.5em;
+  font-size: 1.17em;
+`;
+
+const Paragraph = styled.p`
+  margin-block-start: 0.5em;
+  margin-block-end: 0.5em;
 `;
 
 type PreviewData = {
@@ -53,7 +63,7 @@ const defaultValue =
 
 const PreviewCard = ({ value }: { value: string }) => {
   const { data, error, isLoading } = useSWR(
-    `/api/preview`,
+    `/api/preview/`,
     fetcher({ url: value })
   );
 
@@ -64,8 +74,8 @@ const PreviewCard = ({ value }: { value: string }) => {
   return (
     <PreviewCardDiv>
       <img src={data.image} alt={data.title} />
-      <h3>{data.title}</h3>
-      <p>{data.description}</p>
+      <H3>{data.title}</H3>
+      <Paragraph>{data.description}</Paragraph>
     </PreviewCardDiv>
   );
 };
