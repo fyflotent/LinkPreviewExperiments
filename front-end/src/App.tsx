@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import ky from "ky";
-import { useRef } from "react";
+import { useState } from "react";
 import useSWR, { Fetcher } from "swr";
 
 const Body = styled.div`
@@ -45,6 +45,17 @@ const Paragraph = styled.p`
   margin-block-end: 0.5em;
 `;
 
+const PreviewDataBody = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+`;
+
+const PreviewDataImage = styled.img`
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+`;
+
 type PreviewData = {
   title: string;
   description: string;
@@ -73,23 +84,31 @@ const PreviewCard = ({ value }: { value: string }) => {
 
   return (
     <PreviewCardDiv>
-      <img src={data.image} alt={data.title} />
-      <H3>{data.title}</H3>
-      <Paragraph>{data.description}</Paragraph>
+      <PreviewDataImage src={data.image} alt={data.title} />
+      <PreviewDataBody>
+        <H3>{data.title}</H3>
+        <Paragraph>{data.description}</Paragraph>
+      </PreviewDataBody>
     </PreviewCardDiv>
   );
 };
 
 const App = () => {
-  const inputRef = useRef<HTMLInputElement>(null);
+  const [currentValue, setCurrentValue] = useState<string>(defaultValue);
 
   return (
     <Body>
       <InputDiv>
         <InputLabel htmlFor="linkInput">Enter a link:</InputLabel>
-        <TextInput ref={inputRef} defaultValue={defaultValue} id="linkInput" />
+        <TextInput
+          defaultValue={defaultValue}
+          onChange={(e) => {
+            setCurrentValue(e.target.value);
+          }}
+          id="linkInput"
+        />
       </InputDiv>
-      <PreviewCard value={inputRef.current?.value ?? defaultValue} />
+      <PreviewCard value={currentValue} />
     </Body>
   );
 };
