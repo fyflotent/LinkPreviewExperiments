@@ -72,7 +72,11 @@ const PreviewDataBody = styled.div<{ inheritBorder?: boolean }>`
   padding: 8px;
   max-height: 80px;
   background-color: #e1e1e1;
-  ${(props) => props.inheritBorder && "border-radius: inherit;"}
+  /* inherit lower border radius always */
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+
+  ${(props) => props.inheritBorder && "border-radius: 6px;"}
 `;
 
 const PreviewDataImage = styled.img`
